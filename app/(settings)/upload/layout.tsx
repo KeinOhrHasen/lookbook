@@ -12,7 +12,7 @@ export default function UploadLayout({
 }>) {
 
   return (
-    <section>
+    <section className="h-full">
       {children}
     </section>
   );

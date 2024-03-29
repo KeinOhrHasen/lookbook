@@ -1,8 +1,6 @@
 "use client"
 
-import HomeContent from "./shared/home-content/home-content";
-import Navigation from "./shared/navigation/navigatiop";
-
+import HomeContent from "../components/shared/home-content";
 
 export default function Home() {
   
