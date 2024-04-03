@@ -1,4 +1,5 @@
 "use client"
+
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,8 +9,8 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(6, {
+    message: "Username must be at least 6 characters.",
   }),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
