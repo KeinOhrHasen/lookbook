@@ -23,13 +23,13 @@ export default function UploadFile() {
   }
 
   return (
-    <div className="p-24 bg-slate-200 h-full">
+    <div className="px-24 pt-24 pb-40 bg-slate-200 h-full">
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Image
           className="blur-md"
           src={mountain}
           alt="Picture of the author"
-          height={200} 
+          height={200}
         />
         <Label htmlFor="picture">Pictures</Label>
         <Input id="picture" type="file" onChange={handleFileChange}/>

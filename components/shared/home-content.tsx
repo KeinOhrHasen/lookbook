@@ -1,4 +1,3 @@
-import Footer from "./footer";
 import Gallery from "./gallery";
 
 export default function HomeContent() {
@@ -24,6 +23,5 @@ export default function HomeContent() {
       </div>
 
       <Gallery></Gallery>
-      <Footer></Footer>
     </div>
 }
