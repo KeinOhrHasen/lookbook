@@ -7,11 +7,28 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { Button } from "@/components/ui/button";
+import { ENVIRONMENT } from "@/configs/environment";
 
 
 export default function GridList({list}) {
 
-return (<div className="mt-[24px]">
+    function deleteGrid(id: number) {
+        fetch(`${ENVIRONMENT.apiURL}/messages/delete`, {
+            method: "DELETE",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+              },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                // reload page
+            })
+        }
+    
+
+    return (<div className="mt-[24px]">
         <Table>
             <TableCaption>A list gids.</TableCaption>
             <TableHeader className="bg-gradient-to-r from-cyan-500 to-blue-500">
@@ -20,6 +37,7 @@ return (<div className="mt-[24px]">
                 <TableHead className="text-amber-400">Id</TableHead>
                 <TableHead className="text-amber-400">Columns</TableHead>
                 <TableHead className="text-right text-amber-400">Ceated at</TableHead>
+                <TableHead className="text-right text-amber-400"></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -30,6 +48,9 @@ return (<div className="mt-[24px]">
                     <TableCell>{grid.id}</TableCell>
                     <TableCell>1</TableCell>
                     <TableCell className="text-right">{grid.created_at}</TableCell>
+                    <TableCell className="flex gap-4">
+                        <Button onClick={() => deleteGrid(grid.id)}>Delete</Button>
+                    </TableCell>
                 </TableRow>
                 ))}
   

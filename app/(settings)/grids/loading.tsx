@@ -1,6 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-
 export default function Loading() {
   return (   
     <div className="flex flex-col items-center justify-center space-y-3 w-full h-full p-24 mt-24">
