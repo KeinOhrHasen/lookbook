@@ -32,8 +32,7 @@ export default function Grid() {
       router.push("/grids/new");
   }
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No grid data</p>
+  if (!data || isLoading ) return <p className="p-24 bg-slate-400 h-full">No grid data</p>
   
   return (
     <div className="p-24 bg-slate-400 h-full">

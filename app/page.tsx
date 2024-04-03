@@ -5,7 +5,7 @@ import HomeContent from "../components/shared/home-content";
 export default function Home() {
   
   return (
-    <main className="p-4">
+    <main>
       <HomeContent></HomeContent>
     </main>
   );

@@ -9,11 +9,10 @@ export default function Navigation() {
     const router = useRouter(); 
 
     function logout() {
-        // make logout from system
         router.push("/login");
     }
 
-    return <nav className="p-5 fixed top-0 left-0 right-0 border-b-2 border-slate-300 backdrop-blur-md z-10"> 
+    return <nav className="p-5 fixed top-0 left-0 right-0 border-b-2 border-slate-900 backdrop-blur-md z-10"> 
             <div className="flex items-center justify-between">
                 <ul className="flex items-center">
                     <li className="mr-4">
