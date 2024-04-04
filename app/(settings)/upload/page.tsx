@@ -10,16 +10,8 @@ export default function UploadFile() {
   function handleFileChange(e) {
     console.log(e)
     e.preventDefault();
-
-    // Read the form data
-    // const form = e.target.files;
-    // const formData = new FormData(e);
-
-    // You can pass formData as a fetch body directly:
-    // fetch('https://jsonplaceholder.typicode.com/posts', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
+    const form = e.target.files;
+    const formData = new FormData(e);
   }
 
   return (

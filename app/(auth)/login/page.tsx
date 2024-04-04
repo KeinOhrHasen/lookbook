@@ -7,6 +7,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { useId, useState } from "react"
 
 const formSchema = z.object({
   username: z.string().min(6, {
@@ -20,7 +21,9 @@ const formSchema = z.object({
 })
 
 export default function Login() {
-  const router = useRouter(); 
+  const router = useRouter();
+  const passwordHintId = useId();
+  const [isHintVisible, setHintVisible] = useState(true)
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,10 +33,12 @@ export default function Login() {
     },
   })
 
+  function useSuggestedPassword() {
+    form.setValue('password', passwordHintId);
+    setHintVisible(false)
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    
-    // ✅ This will be type-safe and validated.
     console.log(values);
     router.push("/");
   }
@@ -70,6 +75,9 @@ export default function Login() {
               <FormControl>
                 <Input placeholder="your pass " {...field} />
               </FormControl>
+              {isHintVisible &&
+                <Button onClick={useSuggestedPassword}>Use Suggested pass</Button>
+              }
               <FormDescription>
                 This is your private password.
               </FormDescription>

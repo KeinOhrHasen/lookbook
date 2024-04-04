@@ -10,7 +10,6 @@ import GridList from "./_grid-list";
 export default function Grid() {
   const router = useRouter(); 
   const [data, setData] = useState([])
-  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch(`${ENVIRONMENT.apiURL}/messages`, {
@@ -23,7 +22,6 @@ export default function Grid() {
       .then((res) => res.json())
       .then((data) => {
         setData(data)
-        setLoading(false)
       })
   }, [])
   
@@ -32,7 +30,7 @@ export default function Grid() {
       router.push("/grids/new");
   }
 
-  if (!data || isLoading ) return <p className="p-24 bg-slate-400 h-full">No grid data</p>
+  if (!data ) return <p className="p-24 bg-slate-400 h-full">No grid data</p>
   
   return (
     <div className="p-24 bg-slate-400 h-full">
