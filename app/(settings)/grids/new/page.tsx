@@ -1,54 +1,59 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { ENVIRONMENT } from "@/configs/environment";
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { ENVIRONMENT } from '@/configs/environment';
 
 const formSchema = z.object({
   name: z.string().min(6, {
-    message: "Grid name must be at least 6 characters.",
+    message: 'Grid name must be at least 6 characters.',
   }),
-  columns: z.preprocess((a) => parseInt(z.string().parse(a),10),
-  z.number().positive().min(1, {
-    message: "Columns amount must be bigger than 0.",
-  }).max(6, {
-    message: "Columns amount must be less than 7.",
-  }))
-})
+  columns: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z
+      .number()
+      .positive()
+      .min(1, {
+        message: 'Columns amount must be bigger than 0.',
+      })
+      .max(6, {
+        message: 'Columns amount must be less than 7.',
+      }),
+  ),
+});
 
 export default function NewGrid() {
   const router = useRouter();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: '',
       columns: 1,
     },
-  })
-
+  });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     fetch(`${ENVIRONMENT.apiURL}/messages/create/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(values),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        router.push("/grids");
-      })
+        router.push('/grids');
+      });
   }
-  
+
   return (
     <div className="p-24 bg-slate-400 h-full">
       <h1>New Grid</h1>
@@ -64,9 +69,7 @@ export default function NewGrid() {
                 <FormControl>
                   <Input placeholder="name" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is grid name.
-                </FormDescription>
+                <FormDescription>This is grid name.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -80,9 +83,7 @@ export default function NewGrid() {
                 <FormControl>
                   <Input type="number" placeholder="columns" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is amount of columns in grid.
-                </FormDescription>
+                <FormDescription>This is amount of columns in grid.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

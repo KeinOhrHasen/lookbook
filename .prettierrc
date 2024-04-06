@@ -1,0 +1,24 @@
+{
+  "bracketSpacing": true,
+  "printWidth": 120,
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "useTabs": false,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "*.component",
+      "options": {
+        "parser": "react"
+      }
+    }
+  ]
+}
