@@ -43,9 +43,6 @@ export default function NewGrid() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     axios
       .post(`${ENVIRONMENT.apiURL}/messages/create/`, JSON.stringify(values), {
-        params: {
-          ID: 12345,
-        },
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',

@@ -1,12 +1,13 @@
 import { GALLERY_DATA } from '@/public/constants/gallery-dataset';
 import Image from 'next/image';
+import './styles.css';
 
 export default function Gallery() {
   const gallery = GALLERY_DATA;
 
   return (
     <div className="min-h-screen flex flex-col justify-center w-full">
-      <h2 className="p-12 lg:px-16 text-center text-4xl bg-blue-100" style={{ color: 'orange' }}>
+      <h2 className="header p-12 lg:px-16 text-center text-4xl bg-blue-100" style={{ color: 'orange' }}>
         Clients gallery
       </h2>
       <div className="grid grid-cols-3 gap-8 p-24 lg:gap-12 lg:p-28">
