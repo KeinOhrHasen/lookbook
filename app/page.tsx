@@ -1,9 +1,8 @@
-"use client"
+'use client';
 
-import HomeContent from "../components/shared/home-content";
+import { HomeContent } from '../components/shared';
 
 export default function Home() {
-  
   return (
     <main>
       <HomeContent></HomeContent>
