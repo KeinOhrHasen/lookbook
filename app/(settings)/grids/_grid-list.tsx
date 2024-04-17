@@ -2,7 +2,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Button } from '@/components/ui/button';
 import { ENVIRONMENT } from '@/configs/environment';
 
-export default function GridList({ list }) {
+export default function GridList({ list, fetchGrids }) {
   function deleteGrid(id: number) {
     fetch(`${ENVIRONMENT.apiURL}/messages/delete/${id}`, {
       method: 'DELETE',
@@ -10,11 +10,9 @@ export default function GridList({ list }) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // reload page
-      });
+    }).then(() => {
+      fetchGrids();
+    });
   }
 
   return (

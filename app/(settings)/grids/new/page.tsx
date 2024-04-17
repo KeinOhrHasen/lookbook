@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ENVIRONMENT } from '@/configs/environment';
 import './index.css';
+import axios from 'axios';
 
 const formSchema = z.object({
   name: z.string().min(6, {
@@ -40,17 +41,23 @@ export default function NewGrid() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    fetch(`${ENVIRONMENT.apiURL}/messages/create/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    axios
+      .post(`${ENVIRONMENT.apiURL}/messages/create/`, JSON.stringify(values), {
+        params: {
+          ID: 12345,
+        },
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
         router.push('/grids');
       });
   }

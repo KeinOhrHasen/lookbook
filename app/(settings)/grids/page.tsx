@@ -12,23 +12,24 @@ export default function Grid() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const resp = await fetch(`${ENVIRONMENT.apiURL}/messages`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
-        const grids = await resp.json();
-        setData(grids);
-      } catch {
-        setError(true);
-      }
-    };
-    fetchUser();
+    fetchGrids();
   }, []);
+
+  async function fetchGrids(): void {
+    try {
+      const resp = await fetch(`${ENVIRONMENT.apiURL}/messages`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const grids = await resp.json();
+      setData(grids);
+    } catch {
+      setError(true);
+    }
+  }
 
   function addNewGrid() {
     router.push('/grids/new');
@@ -44,7 +45,7 @@ export default function Grid() {
         <Button onClick={addNewGrid}>Add Grid</Button>
       </div>
 
-      <GridList list={data}></GridList>
+      <GridList list={data} fetchGrids={fetchGrids}></GridList>
     </div>
   );
 }
