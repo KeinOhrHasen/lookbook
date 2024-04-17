@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ENVIRONMENT } from '@/configs/environment';
+import './index.css';
 
 const formSchema = z.object({
   name: z.string().min(6, {
@@ -56,7 +57,7 @@ export default function NewGrid() {
 
   return (
     <div className="p-24 bg-slate-400 h-full">
-      <h1>New Grid</h1>
+      <h1 className="title">New Grid</h1>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

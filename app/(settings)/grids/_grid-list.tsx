@@ -4,7 +4,7 @@ import { ENVIRONMENT } from '@/configs/environment';
 
 export default function GridList({ list }) {
   function deleteGrid(id: number) {
-    fetch(`${ENVIRONMENT.apiURL}/messages/delete`, {
+    fetch(`${ENVIRONMENT.apiURL}/messages/delete/${id}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
