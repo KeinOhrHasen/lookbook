@@ -4,7 +4,7 @@ import { ENVIRONMENT } from '@/configs/environment';
 
 export default function GridList({ list, fetchGrids }) {
   function deleteGrid(id: number) {
-    fetch(`${ENVIRONMENT.apiURL}/messages/delete/${id}`, {
+    fetch(`${ENVIRONMENT.apiURL}/grid/delete/${id}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -37,7 +37,7 @@ export default function GridList({ list, fetchGrids }) {
                 <TableCell>1</TableCell>
                 <TableCell className="text-right">{grid.created_at}</TableCell>
                 <TableCell className="flex gap-4">
-                  <Button onClick={() => deleteGrid(grid.id)}>Delete</Button>
+                  <Button onClick={() => deleteGrid(grid._id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

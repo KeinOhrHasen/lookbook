@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ENVIRONMENT } from '@/configs/environment';
-import './index.css';
 import axios from 'axios';
 
 const formSchema = z.object({
@@ -42,7 +41,7 @@ export default function NewGrid() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     axios
-      .post(`${ENVIRONMENT.apiURL}/messages/create/`, JSON.stringify(values), {
+      .post(`${ENVIRONMENT.apiURL}/grid`, JSON.stringify(values), {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',

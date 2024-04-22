@@ -17,7 +17,7 @@ export default function Grid() {
 
   async function fetchGrids(): void {
     try {
-      const resp = await fetch(`${ENVIRONMENT.apiURL}/messages`, {
+      const resp = await fetch(`${ENVIRONMENT.apiURL}/grids`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

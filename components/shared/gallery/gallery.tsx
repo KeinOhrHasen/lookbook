@@ -16,12 +16,12 @@ export default function Gallery() {
             <div className="flex flex-row justify-center">
               <Image
                 className=""
-                src={item.pictureUrl}
+                src={item.pictureUrl ?? '/images/camera.jpg'}
                 alt={item.title}
                 width="250"
                 height="150"
                 loading="lazy"
-                style={{ objectFit: 'contain' }}
+                style={{ objectFit: 'cover' }}
               />
             </div>
             <div className="text-center text-black">{item.title}</div>
