@@ -33,6 +33,16 @@ export default function Navigation() {
                 Grids
               </Link>
             </li>
+            <li className="mr-4">
+              <Link className={`link ${pathname === '/booking' ? 'text-orange-500' : ''}`} href="/booking">
+                Booking
+              </Link>
+            </li>
+            <li className="mr-4">
+              <Link className={`link ${pathname === '/settings' ? 'text-orange-500' : ''}`} href="/settings">
+                Settings
+              </Link>
+            </li>
           </ul>
           <Button onClick={logout}>Logout</Button>
         </div>
