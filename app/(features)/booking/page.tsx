@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
@@ -14,6 +14,10 @@ export default function Booking() {
   if (selected) {
     footer = <p>You picked {format(selected, 'PP')}.</p>;
   }
+
+  useEffect(() => {
+    nameRef.current.focus();
+  });
 
   const bookDate = () => {
     console.log(nameRef.current?.value);
