@@ -36,7 +36,7 @@ export default function GridList({ fetchGrids }) {
         <TableBody>
           {data &&
             data.map((grid) => (
-              <TableRow key={grid.id}>
+              <TableRow key={grid._id}>
                 <TableCell className="font-medium">{grid.name}</TableCell>
                 <TableCell>{grid.id}</TableCell>
                 <TableCell>1</TableCell>
