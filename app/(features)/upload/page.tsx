@@ -8,34 +8,17 @@ import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
+import { useRouter } from 'next/navigation';
 
 export default function UploadFile() {
   const nameRef = useRef(null);
   const picturesRef = useRef<HTMLInputElement>(null);
-
-  function handleFileChange(e) {
-    // console.log(e);
-    e.preventDefault();
-    const form = e.target.files;
-    // console.log(form);
-  }
+  const router = useRouter();
 
   function handleSubmit(e) {
-    console.log(e);
     e.preventDefault();
-    const form = e.target.files;
-    // console.log(e.currentTarget);
     const formData = new FormData();
     formData.append('file', picturesRef.current?.files[0]);
-
-    // formData.append('name', nameRef.current?.value);
-    // console.log(formData);
-    // const formDataArray = [...formData.entries()];
-    const albumRequest = {
-      name: nameRef.current?.value,
-      pictures: picturesRef.current?.files,
-    };
-    console.log(formData);
 
     axios
       .post(`${ENVIRONMENT.apiURL}/upload`, formData, {
@@ -45,13 +28,16 @@ export default function UploadFile() {
         },
       })
       .then(function (response) {
-        console.log(response);
+        return axios.post(`${ENVIRONMENT.apiURL}/album/create`, {
+          name: nameRef.current?.value,
+          pictures: [response.data.imageUrl],
+        });
       })
       .catch(function (error) {
         console.log(error);
       })
       .finally(function () {
-        // router.push('/grids');
+        router.push('/');
       });
   }
 
@@ -62,12 +48,14 @@ export default function UploadFile() {
         <form action="" onSubmit={handleSubmit}>
           <Image className="blur-md" src={mountain} alt="Picture of the author" height={200} />
           <Label htmlFor="picture">Pictures</Label>
-          <Input id="pictures" name="pictures" type="file" ref={picturesRef} multiple onChange={handleFileChange} />
+          <Input id="pictures" name="pictures" type="file" ref={picturesRef} multiple />
 
           <Label htmlFor="name">Name</Label>
           <Input id="name" name="name" ref={nameRef} type="text" />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="my-4">
+            Submit
+          </Button>
         </form>
       </div>
     </div>

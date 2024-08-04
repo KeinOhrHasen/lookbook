@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
-import Gallery from './gallery';
-import Discover from './discover';
+import Gallery from '../../../components/shared/gallery';
+import Discover from '../../../components/shared/discover';
 
 export default function HomeContent() {
   const router = useRouter();

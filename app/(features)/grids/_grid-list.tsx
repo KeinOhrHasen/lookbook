@@ -27,7 +27,6 @@ export default function GridList({ fetchGrids }) {
         <TableHeader className="bg-gradient-to-r from-cyan-500 to-blue-500">
           <TableRow>
             <TableHead className="w-[100px] text-amber-400">Name</TableHead>
-            <TableHead className="text-amber-400">Id</TableHead>
             <TableHead className="text-amber-400">Columns</TableHead>
             <TableHead className="text-right text-amber-400">Ceated at</TableHead>
             <TableHead className="text-right text-amber-400"></TableHead>
@@ -38,9 +37,8 @@ export default function GridList({ fetchGrids }) {
             data.map((grid) => (
               <TableRow key={grid._id}>
                 <TableCell className="font-medium">{grid.name}</TableCell>
-                <TableCell>{grid.id}</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell className="text-right">{grid.created_at}</TableCell>
+                <TableCell>{grid.columns}</TableCell>
+                <TableCell className="text-right">24.07.2024</TableCell>
                 <TableCell className="flex gap-4">
                   <Button onClick={() => deleteGrid(grid._id)}>Delete</Button>
                 </TableCell>
