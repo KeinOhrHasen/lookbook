@@ -17,22 +17,29 @@ export default function UploadFile() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', picturesRef.current?.files[0]);
+    const files = picturesRef.current?.files;
+    const requests = Array.from(files).map((file) => {
+      const formData = new FormData();
+      formData.append('file', file);
 
-    axios
-      .post(`${ENVIRONMENT.apiURL}/upload`, formData, {
+      return axios.post(`${ENVIRONMENT.apiURL}/upload`, formData, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data',
         },
-      })
-      .then(function (response) {
-        return axios.post(`${ENVIRONMENT.apiURL}/album/create`, {
-          name: nameRef.current?.value,
-          pictures: [response.data.imageUrl],
-        });
-      })
+      });
+    });
+
+    axios
+      .all(requests)
+      .then(
+        axios.spread((...response) => {
+          return axios.post(`${ENVIRONMENT.apiURL}/album/create`, {
+            name: nameRef.current?.value,
+            pictures: response.map((r) => r.data.imageUrl),
+          });
+        }),
+      )
       .catch(function (error) {
         console.log(error);
       })

@@ -26,10 +26,8 @@ export default function Album() {
           'Content-Type': 'application/json',
         },
       })
-      .then(function (response) {
-        const fixedData = { ...response.data, pictures: response.data.pictures.map((p) => p.slice(1, -1)) };
-        // ""https:s3.com"" -> "https:s3.com"
-        setAlbum(fixedData);
+      .then(function ({ data }) {
+        setAlbum(data);
       })
       .catch(function (error) {
         console.log(error);
@@ -52,13 +50,17 @@ export default function Album() {
     document.body.removeChild(element);
   };
 
+  const openFullScreen = (pictureUrl, index) => {
+    console.log('Open full screen mode');
+  };
+
   return (
     <div className="p-24">
       <h1 className="title mb-4">Album {album?.name}</h1>
       <div className="grid grid-cols-3 gap-8 lg:gap-12 lg:p-28">
         {album &&
           album.pictures.map((picture, index) => (
-            <div key={index} className="flex flex-col justify-center" onClick={() => downloadPicture(picture, index)}>
+            <div key={index} className="flex flex-col justify-center">
               <div className="flex flex-row justify-center">
                 <Image
                   className=""
@@ -69,11 +71,16 @@ export default function Album() {
                   loading="lazy"
                   style={{ objectFit: 'cover' }}
                 />
+                <Button onClick={() => downloadPicture(picture, index)} className="ml-4">
+                  Download
+                </Button>
+                <Button onClick={() => openFullScreen(picture, index)} className="ml-4">
+                  Full Screen
+                </Button>
               </div>
             </div>
           ))}
       </div>
-
       <input type="input" id="name" name="name" ref={gridRef} className="w-80 m-3"></input>
       <Button onClick={saveConfigs} className="ml-4">
         Submit

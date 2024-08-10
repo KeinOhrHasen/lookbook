@@ -25,9 +25,7 @@ export default function Gallery() {
         },
       })
       .then(function ({ data }) {
-        const fixedData = data.map((album) => ({ ...album, pictures: album.pictures.map((p) => p.slice(1, -1)) }));
-        // ""https:s3.com"" -> "https:s3.com"
-        setGallery(fixedData);
+        setGallery(data);
       })
       .catch(function (error) {
         console.log(error);
