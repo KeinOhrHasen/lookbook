@@ -8,6 +8,7 @@ import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
 import { IAlbum } from '@/app/(interfaces)/albums.model';
 import Image from 'next/image';
+import { MdFileDownload, MdFullscreen } from 'react-icons/md';
 
 export default function Album() {
   const gridRef = useRef(null);
@@ -72,10 +73,10 @@ export default function Album() {
                   style={{ objectFit: 'cover' }}
                 />
                 <Button onClick={() => downloadPicture(picture, index)} className="ml-4">
-                  Download
+                  <MdFileDownload />
                 </Button>
                 <Button onClick={() => openFullScreen(picture, index)} className="ml-4">
-                  Full Screen
+                  <MdFullscreen />
                 </Button>
               </div>
             </div>
