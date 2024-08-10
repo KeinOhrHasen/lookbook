@@ -12,7 +12,6 @@ export const GridsContext = React.createContext([]);
 export default function Grid() {
   const router = useRouter();
   const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetchGrids();
@@ -30,15 +29,13 @@ export default function Grid() {
       const grids = await resp.json();
       setData(grids);
     } catch {
-      setError(true);
+      throw new Error('Can`t load grids');
     }
   }
 
   function addNewGrid() {
     router.push('/grids/new');
   }
-
-  if (error) return <p className="p-24 bg-slate-400 h-full">Some errors have appeared...</p>;
 
   return (
     <GridsContext.Provider value={data}>

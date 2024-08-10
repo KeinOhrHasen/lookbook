@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
 import { IAlbum } from '@/app/(interfaces)/albums.model';
+import { useRouter } from 'next/navigation';
 
 export default function Gallery() {
   const [gallery, setGallery] = useState<IAlbum[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetchAlbums();
@@ -24,8 +26,8 @@ export default function Gallery() {
       })
       .then(function ({ data }) {
         const fixedData = data.map((album) => ({ ...album, pictures: album.pictures.map((p) => p.slice(1, -1)) }));
+        // ""https:s3.com"" -> "https:s3.com"
         setGallery(fixedData);
-        console.log(fixedData);
       })
       .catch(function (error) {
         console.log(error);
@@ -35,27 +37,28 @@ export default function Gallery() {
       });
   }
 
+  function navigateToAlbum(albumId: string): void {
+    router.push(`/albums/${encodeURIComponent(albumId)}`);
+  }
+
   return (
-    <div className="min-h-screen flex flex-col justify-center w-full">
-      <h2 className="header p-12 lg:px-16 text-center text-4xl bg-blue-100" style={{ color: 'orange' }}>
-        My gallery
-      </h2>
-      <div className="grid grid-cols-3 gap-8 p-24 lg:gap-12 lg:p-28">
+    <div className="flex flex-col justify-center w-full">
+      <div className="grid grid-cols-3 gap-8 lg:gap-12 lg:p-28">
         {gallery &&
-          gallery.map((item) => (
-            <div key={item._id} className="flex flex-col justify-center">
+          gallery.map((album) => (
+            <div key={album._id} className="flex flex-col justify-center" onClick={() => navigateToAlbum(album._id)}>
               <div className="flex flex-row justify-center">
                 <Image
                   className=""
-                  src={item.pictures[0]}
-                  alt={item.name}
+                  src={album.pictures[0]}
+                  alt={album.name}
                   width="250"
                   height="150"
                   loading="lazy"
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="text-center text-black">{item.name}</div>
+              <div className="text-center text-black">{album.name}</div>
               <div className="text-center text-gray-400">Wedding</div>
             </div>
           ))}

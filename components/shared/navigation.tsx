@@ -4,6 +4,15 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/albums', label: 'Albums' },
+  { href: '/upload', label: 'Upload' },
+  { href: '/grids', label: 'Grids' },
+  { href: '/booking', label: 'Booking' },
+  { href: '/settings', label: 'Settings' },
+];
+
 export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
@@ -18,31 +27,13 @@ export default function Navigation() {
         <div className="font-semibold text-lg">LOOKBOOK</div>
         <div className="flex items-center justify-between">
           <ul className="flex items-center mr-16">
-            <li className="mr-4">
-              <Link className={`link ${pathname === '/' ? 'text-orange-500' : ''}`} href="/">
-                Home
-              </Link>
-            </li>
-            <li className="mr-4">
-              <Link className={`link ${pathname === '/upload' ? 'text-orange-500' : ''}`} href="/upload">
-                Upload
-              </Link>
-            </li>
-            <li className="mr-4">
-              <Link className={`link ${pathname === '/grids' ? 'text-orange-500' : ''}`} href="/grids">
-                Grids
-              </Link>
-            </li>
-            <li className="mr-4">
-              <Link className={`link ${pathname === '/booking' ? 'text-orange-500' : ''}`} href="/booking">
-                Booking
-              </Link>
-            </li>
-            <li className="mr-4">
-              <Link className={`link ${pathname === '/settings' ? 'text-orange-500' : ''}`} href="/settings">
-                Settings
-              </Link>
-            </li>
+            {links.map((link) => (
+              <li key={link.label} className="mr-4">
+                <Link className={`link ${pathname === link.href ? 'text-orange-500' : ''}`} href={link.href}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
           <Button onClick={logout}>Logout</Button>
         </div>

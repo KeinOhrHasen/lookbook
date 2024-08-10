@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
-import Gallery from '../../../components/shared/gallery';
-import Discover from '../../../components/shared/discover';
+import Gallery from './gallery';
+import Discover from './discover';
 
 export default function HomeContent() {
   const router = useRouter();
@@ -29,7 +29,13 @@ export default function HomeContent() {
         </a>
       </div>
 
-      <Gallery />
+      <h2 className="header p-12 lg:px-16 text-center text-4xl bg-blue-100" style={{ color: 'orange' }}>
+        My gallery
+      </h2>
+      <div className="p-24">
+        <Gallery />
+      </div>
+
       <Discover navigateToUpload={navigateToUpload}></Discover>
     </>
   );

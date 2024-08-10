@@ -1,5 +1,5 @@
 import Footer from './footer';
 import Navigation from './navigation';
-import HomeContent from '../../app/(features)/(home)/home-content';
+import HomeContent from './home-content';
 
 export { Footer, Navigation, HomeContent };
