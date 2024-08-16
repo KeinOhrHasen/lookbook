@@ -41,23 +41,28 @@ export default function Gallery() {
 
   return (
     <div className="flex flex-col justify-center w-full">
-      <div className="grid grid-cols-3 gap-8 lg:gap-12 lg:p-28">
+      <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
         {gallery &&
           gallery.map((album) => (
-            <div key={album._id} className="flex flex-col justify-center" onClick={() => navigateToAlbum(album._id)}>
-              <div className="flex flex-row justify-center">
+            <div
+              key={album._id}
+              className="flex flex-col justify-center relative w-full h-full min-w-48 min-h-48 max-h-48 max-w-48"
+              onClick={() => navigateToAlbum(album._id)}
+            >
+              <div className="flex flex-row justify-center w-full h-full">
                 <Image
-                  className=""
+                  className="w-full h-full"
                   src={album.pictures[0]}
                   alt={album.name}
-                  width="250"
-                  height="150"
-                  loading="lazy"
+                  width={128}
+                  height={128}
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="text-center text-black">{album.name}</div>
-              <div className="text-center text-gray-400">Wedding</div>
+              <div className="absolute bottom-0 right-0 left-0 flex flex-col gap-1 bg-slate-800/80">
+                <div className="text-center text-black">{album.name}</div>
+                <div className="text-center text-gray-400">Wedding</div>
+              </div>
             </div>
           ))}
       </div>

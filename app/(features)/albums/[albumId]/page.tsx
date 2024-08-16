@@ -7,7 +7,6 @@ import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
 import { IAlbum } from '@/app/(interfaces)/albums.model';
-import Image from 'next/image';
 import { MdFileDownload, MdFullscreen } from 'react-icons/md';
 
 export default function Album() {
@@ -58,26 +57,20 @@ export default function Album() {
   return (
     <div className="p-24">
       <h1 className="title mb-4">Album {album?.name}</h1>
-      <div className="grid grid-cols-3 gap-8 lg:gap-12 lg:p-28">
+      <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
         {album &&
           album.pictures.map((picture, index) => (
             <div key={index} className="flex flex-col justify-center">
-              <div className="flex flex-row justify-center">
-                <Image
-                  className=""
-                  src={picture}
-                  alt={album.name + index}
-                  width="250"
-                  height="150"
-                  loading="lazy"
-                  style={{ objectFit: 'cover' }}
-                />
-                <Button onClick={() => downloadPicture(picture, index)} className="ml-4">
-                  <MdFileDownload />
-                </Button>
-                <Button onClick={() => openFullScreen(picture, index)} className="ml-4">
-                  <MdFullscreen />
-                </Button>
+              <div className="flex flex-row justify-center relative w-full h-full">
+                <img className="w-full h-full" src={picture} alt={album.name + index} style={{ objectFit: 'cover' }} />
+                <div className="absolute top-0 right-0 flex flex-col gap-2">
+                  <Button onClick={() => downloadPicture(picture, index)} className="ml-4">
+                    <MdFileDownload />
+                  </Button>
+                  <Button onClick={() => openFullScreen(picture, index)} className="ml-4">
+                    <MdFullscreen />
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
