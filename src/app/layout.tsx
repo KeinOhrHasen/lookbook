@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Navigation, Footer } from '../../components/shared';
+import { Navigation, Footer } from '../core/components';
 
 import { Inter as FontSans } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 import styles from './styles.module.css';
+import { Providers } from '@/src/core/providers/Providers';
+import SessionGuard from '@/src/core/providers/SessionGuard';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -25,9 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        <Navigation></Navigation>
-        <div className={styles.content}>{children}</div>
-        <Footer></Footer>
+        <Providers>
+          <SessionGuard>
+            <Navigation></Navigation>
+            <div className={styles.content}>{children}</div>
+            <Footer></Footer>
+          </SessionGuard>
+        </Providers>
       </body>
     </html>
   );
