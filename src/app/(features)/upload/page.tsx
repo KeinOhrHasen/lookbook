@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
-import mountain from '../../../public/images/mountain.jpg';
+import mountain from '../../../../public/images/mountain.jpg';
 import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import axios from 'axios';
@@ -48,6 +48,14 @@ export default function UploadFile() {
       });
   }
 
+  const SubmitButton = () => {
+    return (
+      <Button type="submit" className="my-4">
+        Book event
+      </Button>
+    );
+  };
+
   return (
     <div className="px-24 pt-24 pb-40 bg-slate-200 h-full">
       <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -56,13 +64,9 @@ export default function UploadFile() {
           <Image className="blur-md" src={mountain} alt="Picture of the author" height={200} />
           <Label htmlFor="picture">Pictures</Label>
           <Input id="pictures" name="pictures" type="file" ref={picturesRef} multiple />
-
           <Label htmlFor="name">Name</Label>
           <Input id="name" name="name" ref={nameRef} type="text" />
-
-          <Button type="submit" className="my-4">
-            Submit
-          </Button>
+          <SubmitButton />
         </form>
       </div>
     </div>

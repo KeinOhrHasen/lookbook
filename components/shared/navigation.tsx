@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+// import { useSession } from 'next-auth/react';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -16,6 +17,9 @@ const links = [
 export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
+
+  // const session = useSession();
+  // const userData = session.data?.user;
 
   function logout() {
     router.push('/login');
@@ -35,6 +39,8 @@ export default function Navigation() {
               </li>
             ))}
           </ul>
+          {/* {session.status === 'authenticated' ? 'Auth Success!' : 'NOT AUTHENTICATED'} */}
+
           <Button onClick={logout}>Logout</Button>
         </div>
       </div>

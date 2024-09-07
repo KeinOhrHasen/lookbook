@@ -5,7 +5,7 @@ import './styles.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
-import { IAlbum } from '@/app/(interfaces)/albums.model';
+import { IAlbum } from '@/app/_interfaces/albums.model';
 import { useRouter } from 'next/navigation';
 
 export default function Gallery() {
@@ -51,7 +51,7 @@ export default function Gallery() {
             >
               <div className="flex flex-row justify-center w-full h-full">
                 <Image
-                  className="w-full h-full"
+                  className="w-full h-full rounded-lg"
                   src={album.pictures[0]}
                   alt={album.name}
                   width={128}
@@ -59,7 +59,7 @@ export default function Gallery() {
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="absolute bottom-0 right-0 left-0 flex flex-col gap-1 bg-slate-800/80">
+              <div className="absolute bottom-0 right-0 left-0 flex flex-col gap-1 bg-slate-800/80 rounded-lg">
                 <div className="text-center text-black">{album.name}</div>
                 <div className="text-center text-gray-400">Wedding</div>
               </div>

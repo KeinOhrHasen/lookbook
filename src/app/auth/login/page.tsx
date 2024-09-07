@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useId, useState } from 'react';
+import { signIn, signOut } from 'next-auth/react';
 
 const formSchema = z.object({
   username: z.string().min(6, {
@@ -84,6 +85,18 @@ export default function Login() {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
+
+      <button
+        type="button"
+        className="mx-2 btn btn-outline-success"
+        onClick={($event) =>  signIn('keycloak')}
+      >
+        Login
+      </button>
+
+      <button type="button" className="mx-2 btn btn-outline-danger" onClick={() => signOut()}>
+        Logout
+      </button>
     </div>
   );
 }

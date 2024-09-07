@@ -1,12 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import 'react-day-picker/dist/style.css';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { ENVIRONMENT } from '@/configs/environment';
-import { IAlbum } from '@/app/(interfaces)/albums.model';
+import { IAlbum } from '@/app/_interfaces/albums.model';
 import { MdFileDownload, MdFullscreen } from 'react-icons/md';
 
 export default function Album() {
@@ -62,7 +63,14 @@ export default function Album() {
           album.pictures.map((picture, index) => (
             <div key={index} className="flex flex-col justify-center">
               <div className="flex flex-row justify-center relative w-full h-full">
-                <img className="w-full h-full" src={picture} alt={album.name + index} style={{ objectFit: 'cover' }} />
+                <Image
+                  className="w-full h-full"
+                  src={picture}
+                  alt={album.name + index}
+                  width={256}
+                  height={256}
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className="absolute top-0 right-0 flex flex-col gap-2">
                   <Button onClick={() => downloadPicture(picture, index)} className="ml-4">
                     <MdFileDownload />

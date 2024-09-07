@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Navigation, Footer } from '../components/shared';
+import { Navigation, Footer } from '../../components/shared';
 
 import { Inter as FontSans } from 'next/font/google';
 
