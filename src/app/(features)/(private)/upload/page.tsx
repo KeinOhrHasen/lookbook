@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
-import mountain from '../../../../public/images/mountain.jpg';
+import mountain from '../../../../../public/images/mountain.jpg';
 import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import axios from 'axios';
