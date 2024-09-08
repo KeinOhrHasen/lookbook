@@ -4,8 +4,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logout from './Logout';
 import { useSession } from 'next-auth/react';
+import Login from './Login';
 
-const links = [
+const publicLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/booking', label: 'Booking' },
+];
+
+const privateLinks = [
   { href: '/', label: 'Home' },
   { href: '/albums', label: 'Albums' },
   { href: '/upload', label: 'Upload' },
@@ -24,22 +30,33 @@ export default function Navigation() {
         <div className="font-semibold text-lg">LOOKBOOK</div>
         <div className="flex items-center justify-between">
           <ul className="flex items-center mr-16">
-            {links.map((link) => (
-              <li key={link.label} className="mr-4">
-                <Link className={`link ${pathname === link.href ? 'text-orange-500' : ''}`} href={link.href}>
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {session.status === 'authenticated' &&
+              privateLinks.map((link) => (
+                <li key={link.label} className="mr-4">
+                  <Link className={`link ${pathname === link.href ? 'text-orange-500' : ''}`} href={link.href}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            {session.status !== 'authenticated' &&
+              publicLinks.map((link) => (
+                <li key={link.label} className="mr-4">
+                  <Link className={`link ${pathname === link.href ? 'text-orange-500' : ''}`} href={link.href}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
           </ul>
-          {session.status === 'authenticated' ? (
-            <div>
-              {session.data?.user?.name}|
-              <Logout />
-            </div>
-          ) : (
-            ''
-          )}
+          <>
+            {session.status === 'authenticated' ? (
+              <>
+                <div className="mr-8">{session.data?.user?.name}</div>
+                <Logout />
+              </>
+            ) : (
+              <Login />
+            )}
+          </>
         </div>
       </div>
     </nav>

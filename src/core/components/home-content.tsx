@@ -31,7 +31,7 @@ export default function HomeContent() {
         </a>
       </div>
       <h2 className="header p-12 lg:px-16 text-center text-4xl bg-blue-100" style={{ color: 'orange' }}>
-        My gallery
+        Portfolio
       </h2>
       <div className="p-24 flex justify-center">
         <Gallery />
