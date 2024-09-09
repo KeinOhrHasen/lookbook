@@ -39,7 +39,7 @@ export default function Grid() {
 
   return (
     <GridsContext.Provider value={data}>
-      <div className="p-24 bg-slate-400 h-full">
+      <div className="p-24 bg-slate-300 h-full">
         <div className="flex justify-between">
           <h1>Grids</h1>
           <Button onClick={addNewGrid}>Add Grid</Button>

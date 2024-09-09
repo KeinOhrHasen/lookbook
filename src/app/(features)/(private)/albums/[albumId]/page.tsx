@@ -56,7 +56,7 @@ export default function Album() {
   };
 
   return (
-    <div className="p-24">
+    <div className="p-24 bg-slate-300">
       <h1 className="title mb-4">Album {album?.name}</h1>
       <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
         {album &&

@@ -1,64 +1,162 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { useFormState, useFormStatus } from 'react-dom';
-import { useToast } from '@/components/ui/use-toast';
-import { bookDateRequest } from '@/src/core/utils/actions';
+
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { ENVIRONMENT } from '@/src/core/configs/environment';
+import axios from 'axios';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-const initialState = {
-  message: null,
-};
+const formSchema = z.object({
+  name: z.string().min(3, {
+    message: 'Grid name must be at least 3 characters.',
+  }),
+  productType: z.string(),
+  details: z.string(),
+  phone: z.string(),
+  email: z.string().email().email({
+    message: 'Type valid email',
+  }),
+});
 
 export default function Booking() {
-  const [selected, setSelected] = useState<Date>();
-  const nameRef = useRef(null);
-  const [state, formAction] = useFormState(bookDateRequest, initialState);
+  const [date, setDate] = useState<Date>();
 
-  const { toast } = useToast();
-  useEffect(() => {
-    if (state.message === 'error') {
-      toast.error('there was an error');
-      return;
-    }
-    if (state.message) {
-      toast({
-        title: 'Scheduled: Catch up',
-        description: 'Friday, February 10, 2023 at 5:57 PM',
-      });
-    }
-  }, [state]);
-
-  const bookDate = () => {
-    console.log(nameRef.current?.value);
-    console.log(selected);
-  };
-
-  const SubmitBtn = () => {
-    const { pending } = useFormStatus();
-    return (
-      <button type="submit" className="btn btn-primary join-item ml-4" disabled={pending}>
-        {pending ? 'please wait...' : 'create task'}
-      </button>
-    );
-  };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+    },
+  });
 
   let footer = <p>Please pick a day.</p>;
-  if (selected) {
-    footer = <p>You picked {format(selected, 'PP')}.</p>;
+  if (date) {
+    footer = <p>You picked {format(date, 'PP')}.</p>;
+  }
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(date, values);
+    axios
+      .post(`${ENVIRONMENT.apiURL}/sessions/create`, JSON.stringify({ ...values, date }), {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {});
   }
 
   return (
-    <div className="p-24">
-      <form action={formAction}>
-        <label className="ml-4">Enter name</label>
-        <input type="input" id="name" name="name" ref={nameRef} className="w-80 m-3"></input>
-        <DayPicker mode="single" selected={selected} onSelect={setSelected} footer={footer} />
-        <SubmitBtn />
-      </form>
+    <div className="p-24 bg-slate-300">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="name" {...field} />
+                </FormControl>
+                <FormDescription>Contact name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="date"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Select Date</FormLabel>
+              </FormItem>
+            )}
+          />
+          <DayPicker mode="single" selected={date} onSelect={setDate} footer={footer} />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="phone" {...field} />
+                </FormControl>
+                <FormDescription>Your Phone</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="productType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Type</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type of photo session" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="personal">personal</SelectItem>
+                    <SelectItem value="couple">couple</SelectItem>
+                    <SelectItem value="family">family</SelectItem>
+                    <SelectItem value="wedding">wedding</SelectItem>
+                    <SelectItem value="studio">studio</SelectItem>
+                    <SelectItem value="smm">smm</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="details"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Details</FormLabel>
+                <FormControl>
+                  <Input placeholder="details" {...field} />
+                </FormControl>
+                <FormDescription>Additional details or preferences</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="email" {...field} />
+                </FormControl>
+                <FormDescription>Email or other contact info</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Create</Button>
+        </form>
+      </Form>
     </div>
   );
 }

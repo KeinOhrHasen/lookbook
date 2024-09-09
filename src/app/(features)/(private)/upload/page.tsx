@@ -57,7 +57,7 @@ export default function UploadFile() {
   };
 
   return (
-    <div className="px-24 pt-24 pb-40 bg-slate-200 h-full">
+    <div className="px-24 pt-24 pb-40 bg-slate-300 h-full">
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <div className="title">Upload new album</div>
         <form action="" onSubmit={handleSubmit}>
