@@ -6,15 +6,20 @@ import { ENVIRONMENT } from '../../../../core/configs/environment';
 import { useState, useEffect } from 'react';
 import GridList from './_grid-list';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hook';
+import { selectGrids } from '@/lib/redux/features/grids/selectors';
+import { list } from '@/lib/redux/features/grids/slice';
 
 export const GridsContext = React.createContext([]);
 
 export default function Grid() {
   const router = useRouter();
   const [data, setData] = useState([]);
-
+  const grids = useAppSelector(selectGrids);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    fetchGrids();
+    // fetchGrids();
+    dispatch(list());
   }, []);
 
   async function fetchGrids(): void {
@@ -38,14 +43,14 @@ export default function Grid() {
   }
 
   return (
-    <GridsContext.Provider value={data}>
+    <GridsContext.Provider value={grids}>
       <div className="p-24 bg-slate-300 h-full">
         <div className="flex justify-between">
           <h1>Grids</h1>
           <Button onClick={addNewGrid}>Add Grid</Button>
         </div>
 
-        <GridList fetchGrids={fetchGrids}></GridList>
+        <GridList></GridList>
       </div>
     </GridsContext.Provider>
   );

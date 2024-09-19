@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import styles from './styles.module.css';
 import { Providers } from '@/src/core/providers/Providers';
 import SessionGuard from '@/src/core/providers/SessionGuard';
+import { StoreProvider } from '../core/providers/StoreProvider';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <Providers>
           <SessionGuard>
-            <Navigation></Navigation>
-            <div className={styles.content}>{children}</div>
-            <Footer></Footer>
+            <StoreProvider>
+              <Navigation></Navigation>
+              <div className={styles.content}>{children}</div>
+              <Footer></Footer>
+            </StoreProvider>
           </SessionGuard>
         </Providers>
       </body>

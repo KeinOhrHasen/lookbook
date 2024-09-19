@@ -1,22 +1,10 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { ENVIRONMENT } from '@/src/core/configs/environment';
 import { useContext } from 'react';
 import { GridsContext } from './page';
+import DeleteForm from '@/src/core/components/grids/delete-form';
 
-export default function GridList({ fetchGrids }) {
+export default function GridList() {
   const data = useContext(GridsContext);
-  function deleteGrid(id: number) {
-    fetch(`${ENVIRONMENT.apiURL}/grid/delete/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(() => {
-      fetchGrids();
-    });
-  }
 
   if (!data?.length) return <p className="p-24 bg-slate-400 h-full">No grid data</p>;
 
@@ -40,7 +28,7 @@ export default function GridList({ fetchGrids }) {
                 <TableCell>{grid.columns}</TableCell>
                 <TableCell className="text-right">24.07.2024</TableCell>
                 <TableCell className="flex gap-4">
-                  <Button onClick={() => deleteGrid(grid._id)}>Delete</Button>
+                  <DeleteForm id={grid._id} />
                 </TableCell>
               </TableRow>
             ))}

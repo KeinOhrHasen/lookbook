@@ -38,3 +38,17 @@ export const bookDateRequest = async (prevState, formData) => {
     return { message: 'error' };
   }
 };
+
+export const deleteGrid = (e, id: string) => {
+  // e.preventDefault();
+  fetch(`${ENVIRONMENT.apiURL}/grid/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then(() => {
+    console.log('fetchGrids');
+    // fetchGrids();
+  });
+};
