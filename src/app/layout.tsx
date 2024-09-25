@@ -9,6 +9,7 @@ import styles from './styles.module.css';
 import { Providers } from '@/src/core/providers/Providers';
 import SessionGuard from '@/src/core/providers/SessionGuard';
 import { StoreProvider } from '../core/providers/StoreProvider';
+import { ThemeProvider } from '../core/providers/ThemeProvider';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -31,8 +32,10 @@ export default function RootLayout({
         <Providers>
           <SessionGuard>
             <StoreProvider>
-              <Navigation></Navigation>
-              <div className={styles.content}>{children}</div>
+              <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+                <Navigation></Navigation>
+                <div className={styles.content}>{children}</div>
+              </ThemeProvider>
               <Footer></Footer>
             </StoreProvider>
           </SessionGuard>

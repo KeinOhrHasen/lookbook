@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import Logout from './Logout';
 import { useSession } from 'next-auth/react';
 import Login from './Login';
+import { ModeToggle } from './theme-toggle';
 
 const publicLinks = [
   { href: '/', label: 'Home' },
@@ -47,6 +48,10 @@ export default function Navigation() {
                 </li>
               ))}
           </ul>
+          <div className="mr-8">
+            <ModeToggle></ModeToggle>
+          </div>
+
           <>
             {session.status === 'authenticated' ? (
               <>
