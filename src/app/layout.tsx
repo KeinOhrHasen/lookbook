@@ -6,10 +6,11 @@ import { Inter as FontSans } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 import styles from './styles.module.css';
-import { Providers } from '@/src/core/providers/Providers';
+import { Keycloak } from '@/src/core/providers/Providers';
 import SessionGuard from '@/src/core/providers/SessionGuard';
 import { StoreProvider } from '../core/providers/StoreProvider';
 import { ThemeProvider } from '../core/providers/ThemeProvider';
+import { ProvidersAll } from '../core/providers/providers-all';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -29,17 +30,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        <Providers>
+        <Keycloak>
           <SessionGuard>
             <StoreProvider>
-              <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-                <Navigation></Navigation>
-                <div className={styles.content}>{children}</div>
-              </ThemeProvider>
-              <Footer></Footer>
+              <ProvidersAll>
+                <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+                  <Navigation></Navigation>
+                  <div className={styles.content}>{children}</div>
+                </ThemeProvider>
+                <Footer></Footer>
+              </ProvidersAll>
             </StoreProvider>
           </SessionGuard>
-        </Providers>
+        </Keycloak>
       </body>
     </html>
   );
