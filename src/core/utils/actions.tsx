@@ -2,58 +2,27 @@
 
 import { ENVIRONMENT } from '@/src/core/configs/environment';
 import axios from 'axios';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { z } from 'zod';
+import OpenAI from 'openai';
 
-export const bookDateRequest = async (prevState, formData) => {
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-  const content = formData;
-  const NewSession = z.object({
-    name: z.string(),
-    date: z.string(),
-    time: z.string(),
-    productType: z.string(),
-    details: z.string(),
-    phone: z.string(),
-    email: z.string(),
+export const generateChatResponse = async (chatMessage) => {
+  const response = await openai.chat.completions.create({
+    messages: [
+      { role: 'system', content: 'Hey there! I am tour assistant' },
+      { role: 'user', content: chatMessage },
+    ],
+    model: 'gpt-3.5-turbo',
+    temperature: 1,
   });
-  try {
-    NewSession.parse({ date, name, time, productType, details, phone, email });
-    await axios
-      .post(`${ENVIRONMENT.apiURL}/sessions/create`, JSON.stringify(content), {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-      });
-    revalidatePath('/booking');
-    return { message: 'success' };
-  } catch (error) {
-    console.log(error);
-    return { message: 'error' };
-  }
-};
 
-export const deleteGrid = (e, id: string) => {
-  // e.preventDefault();
-  fetch(`${ENVIRONMENT.apiURL}/grid/delete/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(() => {
-    console.log('fetchGrids');
-    // fetchGrids();
-  });
-};
+  console.log(response.choices[0].message);
+  console.log(response);
 
-export const generateChatResponse = (a) => {};
+  return 'awesome';
+};
 
 export const fetchUserTokensById = (a) => {};
 export const subtractTokens = (a, b) => {};
