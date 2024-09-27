@@ -52,3 +52,8 @@ export const deleteGrid = (e, id: string) => {
     // fetchGrids();
   });
 };
+
+export const generateChatResponse = (a) => {};
+
+export const fetchUserTokensById = (a) => {};
+export const subtractTokens = (a, b) => {};

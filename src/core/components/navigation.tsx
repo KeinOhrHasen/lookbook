@@ -19,6 +19,7 @@ const privateLinks = [
   { href: '/grids', label: 'Grids' },
   { href: '/booking', label: 'Booking' },
   { href: '/settings', label: 'Settings' },
+  { href: '/chat', label: 'Chat' },
 ];
 
 export default function Navigation() {
