@@ -12,6 +12,7 @@ export const generateChatResponse = async (chatMessages) => {
       messages: [{ role: 'system', content: 'Hey there! I am tour assistant' }, ...chatMessages],
       model: 'gpt-3.5-turbo',
       temperature: 1,
+      max_tokens: 200,
     });
 
     console.log(response.choices[0].message);
@@ -22,6 +23,3 @@ export const generateChatResponse = async (chatMessages) => {
     return null;
   }
 };
-
-export const fetchUserTokensById = (a) => {};
-export const subtractTokens = (a, b) => {};
