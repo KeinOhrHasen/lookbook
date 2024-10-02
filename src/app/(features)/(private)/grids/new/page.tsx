@@ -41,7 +41,7 @@ export default function NewGrid() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     axios
-      .post(`${ENVIRONMENT.apiURL}/grid`, JSON.stringify(values), {
+      .post(`${ENVIRONMENT.apiURL}/grid`, JSON.stringify({ ...values, date: new Date() }), {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',

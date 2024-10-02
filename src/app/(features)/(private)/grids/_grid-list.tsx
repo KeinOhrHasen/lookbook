@@ -16,7 +16,7 @@ export default function GridList() {
           <TableRow>
             <TableHead className="w-[100px] text-amber-400">Name</TableHead>
             <TableHead className="text-amber-400">Columns</TableHead>
-            <TableHead className="text-right text-amber-400">Ceated at</TableHead>
+            <TableHead className="text-amber-400">Ceated at</TableHead>
             <TableHead className="text-right text-amber-400"></TableHead>
           </TableRow>
         </TableHeader>
@@ -26,8 +26,8 @@ export default function GridList() {
               <TableRow key={grid._id}>
                 <TableCell className="font-medium">{grid.name}</TableCell>
                 <TableCell>{grid.columns}</TableCell>
-                <TableCell className="text-right">24.07.2024</TableCell>
-                <TableCell className="flex gap-4">
+                <TableCell className="">{grid.date ? new Date(grid.date).toDateString() : '-'}</TableCell>
+                <TableCell className="text-right flex justify-end gap-4">
                   <DeleteForm id={grid._id} />
                 </TableCell>
               </TableRow>

@@ -42,9 +42,31 @@ export default function Chat() {
     setText('');
   };
 
+  const askIdeas = () => {
+    const query = { role: Role.user, content: 'Tell me ideas for photosession' };
+
+    mutate(query);
+    setMessages((prev) => [...prev, query]);
+  };
+
+  const askRoutes = () => {
+    const query = { role: Role.user, content: 'Find 3 popular photo places near me' };
+
+    mutate(query);
+    setMessages((prev) => [...prev, query]);
+  };
+
   return (
     <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto] px-24 pt-12 pb-4 bg-slate-300">
-      <div className="">Ask Chat GPT</div>
+      <div className="flex">
+        Ask Chat GPT
+        <Button className="btn btn-primary join-item ml-8" disabled={isPending} onClick={askIdeas}>
+          Ask about ideas
+        </Button>
+        <Button className="btn btn-primary join-item ml-8" disabled={isPending} onClick={askRoutes}>
+          3 Popular places ...
+        </Button>
+      </div>
       <div>
         {messages.map(({ role, content }, index) => {
           const avatar = role == 'user' ? '👤' : '🤖';

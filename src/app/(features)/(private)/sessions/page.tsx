@@ -7,8 +7,11 @@ import { useEffect } from 'react';
 import { sessionsList, sessionUpdateStatus } from '@/lib/redux/features/sessions/slice';
 import { Button } from '@/components/ui/button';
 import { ISession } from '@/src/core/interfaces/sessions.model';
+import { useRouter } from 'next/navigation';
 
 export default function Sessions() {
+  const router = useRouter();
+
   const sessions = useAppSelector(selectSessions);
   const dispatch = useAppDispatch();
   const statusesMap = new Map([
@@ -20,6 +23,10 @@ export default function Sessions() {
   useEffect(() => {
     dispatch(sessionsList());
   }, []);
+
+  function addNewSession() {
+    router.push('/booking');
+  }
 
   const getStatus = (session: ISession): string => {
     return statusesMap.get(session?.status || 'requested') || 'planned';
@@ -33,6 +40,10 @@ export default function Sessions() {
 
   return (
     <div className="px-24 py-12 bg-slate-300 h-full">
+      <div className="flex justify-between mb-6">
+        <h1 className="title">Sessions</h1>
+        <Button onClick={addNewSession}>Add Session</Button>
+      </div>
       <Table>
         <TableCaption>A list of your sessions</TableCaption>
         <TableHeader>
@@ -51,7 +62,7 @@ export default function Sessions() {
           {sessions.map((session) => (
             <TableRow key={session._id}>
               <TableCell className="font-medium">{session.name}</TableCell>
-              <TableCell>{session.date}</TableCell>
+              <TableCell>{session.date ? new Date(session.date).toDateString() : '-'}</TableCell>
               <TableCell>{session.productType}</TableCell>
               <TableCell>{session.details}</TableCell>
               <TableCell>{session.phone}</TableCell>

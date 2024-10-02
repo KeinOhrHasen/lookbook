@@ -9,18 +9,39 @@ import axios from 'axios';
 import { ENVIRONMENT } from '@/src/core/configs/environment';
 import { IAlbum } from '@/app/_interfaces/albums.model';
 import { MdFileDownload, MdFullscreen } from 'react-icons/md';
-import { Input } from '@/components/ui/input';
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hook';
+import { selectGrids } from '@/lib/redux/features/grids/selectors';
+import { list } from '@/lib/redux/features/grids/slice';
+
+const initial = { gridId: '' };
+
+interface Values {
+  gridId: number | null;
+}
 
 export default function Album() {
-  const gridRef = useRef(null);
   const params = useParams();
   const [album, setAlbum] = useState<IAlbum>(null);
+  const [initialState, setInitialState] = useState<any>(initial);
+  // const [className, setClassName] = useState<string>('grid gap-8 lg:gap-12 sm:grid-cols-3');
+  const grids = useAppSelector(selectGrids);
+
+  const handleSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    console.log(JSON.stringify(values));
+    setSubmitting(false);
+
+    axios
+      .put(`${ENVIRONMENT.apiURL}/albums/${params.albumId}`, values)
+      .then(function ({ data }) {
+        updateLayout(album);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    // gridRef.current.focus();
-    console.log(params.albumId);
-    console.log(`${ENVIRONMENT.apiURL}/album/${params.albumId}`);
-
     axios
       .get(`${ENVIRONMENT.apiURL}/album/${params.albumId}`, {
         headers: {
@@ -30,15 +51,23 @@ export default function Album() {
       })
       .then(function ({ data }) {
         setAlbum(data);
+        setInitialState({ gridId: data.gridId });
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
-  const saveConfigs = () => {
-    console.log(gridRef.current?.value);
-  };
+  function updateLayout(data) {
+    // setInitialState({ gridId: data.gridId });
+    // console.log('grids', grids);
+    // const cols = grids.find((g) => g._id === data.gridId)?.columns;
+    // console.log('cols', cols);
+    // const newClassName = className + ' grid-cols-' + 12 / cols;
+    // setClassName(newClassName);
+    // console.log('newClassName', newClassName);
+    // console.log('className', className);
+  }
 
   const downloadPicture = (pictureUrl, index) => {
     const element = document.createElement('a');
@@ -87,10 +116,25 @@ export default function Album() {
 
       <h1 className="title mt-6">{album?.name} grid setup</h1>
       <div className="flex items-center">
-        <Input type="input" id="name" name="name" ref={gridRef} className="w-80 p-2 my-4"></Input>
-        <Button onClick={saveConfigs} className="ml-4">
-          Save grid configs
-        </Button>
+        <Formik initialValues={initialState} onSubmit={handleSubmit} enableReinitialize={true}>
+          <Form>
+            <div className="bg-slate-100 p-4 mt-4">
+              <label htmlFor="gridId" className="pt-10 mr-8">
+                Select album grid:
+              </label>
+              <Field as="select" name="gridId">
+                {grids.map((grid) => (
+                  <option key={grid._id} value={grid._id}>
+                    {grid.name} ({grid.columns})
+                  </option>
+                ))}
+              </Field>
+            </div>
+            <Button type="submit" className="block mt-8">
+              Save grid configs
+            </Button>
+          </Form>
+        </Formik>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import { ENVIRONMENT } from '@/src/core/configs/environment';
 import axios from 'axios';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -31,6 +32,7 @@ const formSchema = z.object({
 export default function Booking() {
   const [date, setDate] = useState<Date>();
   const router = useRouter();
+  const session = useSession();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,7 +62,11 @@ export default function Booking() {
         console.log(error);
       })
       .finally(function () {
-        router.push('/sessions');
+        if (session.status === 'authenticated') {
+          router.push('/sessions');
+        } else {
+          router.push('/');
+        }
       });
   }
 
