@@ -59,9 +59,8 @@ export default function Gallery() {
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="absolute bottom-0 right-0 left-0 flex flex-col gap-1 bg-slate-800/80 rounded-lg">
-                <div className="text-center text-black">{album.name}</div>
-                <div className="text-center text-gray-400">Wedding</div>
+              <div className="p-3 absolute bottom-0 right-0 left-0 flex flex-col gap-1 bg-slate-800/80 rounded-lg">
+                <div className="text-center text-gray-400">{album.name}</div>
               </div>
             </div>
           ))}

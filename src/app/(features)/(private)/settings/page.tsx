@@ -3,14 +3,14 @@
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { Button } from '@/components/ui/button';
 
-const initialState = { theme: 'light' };
+const initialState = { locale: 'UK' };
 
 interface Values {
-  theme: string;
+  locale: string;
 }
 
 export default function Settings() {
-  const themes = ['light', 'dark', 'system'];
+  const locales = ['Ukraine', 'UK'];
 
   const handleSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
     alert(JSON.stringify(values));
@@ -23,12 +23,12 @@ export default function Settings() {
         <Form>
           <div className="bg-slate-100 p-8">
             <label htmlFor="name" className="pt-10 mr-8">
-              Select app theme:
+              Select app locale:
             </label>
             <Field as="select" name="theme">
-              {themes.map((themeItem) => (
-                <option key={themeItem} value={themeItem}>
-                  {themeItem}
+              {locales.map((locale) => (
+                <option key={locale} value={locale}>
+                  {locale}
                 </option>
               ))}
             </Field>

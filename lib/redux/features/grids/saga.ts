@@ -13,6 +13,6 @@ export function* loadAsync() {
   }
 }
 
-export function* watchLoadAsync() {
+export function* watchLoadGridsAsync() {
   yield takeLatest(list.type, loadAsync);
 }

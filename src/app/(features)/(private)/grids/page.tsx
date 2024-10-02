@@ -26,7 +26,7 @@ export default function Grid() {
 
   return (
     <GridsContext.Provider value={grids}>
-      <div className="p-24 bg-slate-300 h-full">
+      <div className="px-24 py-12 bg-slate-300 h-full">
         <div className="flex justify-between">
           <h1>Grids</h1>
           <Button onClick={addNewGrid}>Add Grid</Button>

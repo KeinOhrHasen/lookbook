@@ -59,7 +59,7 @@ export default function NewGrid() {
   }
 
   return (
-    <div className="p-24 bg-slate-300 h-full">
+    <div className="px-24 py-12 bg-slate-300 h-full">
       <h1 className="title">New Grid</h1>
 
       <Form {...form}>

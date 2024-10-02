@@ -44,7 +44,7 @@ export default function UploadFile() {
         console.log(error);
       })
       .finally(function () {
-        router.push('/');
+        router.push('/albums');
       });
   }
 
@@ -57,15 +57,15 @@ export default function UploadFile() {
   };
 
   return (
-    <div className="px-24 pt-24 pb-40 bg-slate-300 h-full">
+    <div className="px-24 pt-12 pb-40 bg-slate-300 h-full">
       <div className="grid w-full max-w-sm items-center gap-1.5">
-        <div className="title">Upload new album</div>
+        <div className="title mb-6">Upload new album</div>
         <form action="" onSubmit={handleSubmit}>
-          <Image className="blur-md" src={mountain} alt="Picture of the author" height={200} />
+          <Image className="blur-md mb-6" src={mountain} alt="Picture of the author" height={200} />
           <Label htmlFor="picture">Pictures</Label>
           <Input id="pictures" name="pictures" type="file" ref={picturesRef} multiple />
           <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" ref={nameRef} type="text" />
+          <Input id="name" name="name" ref={nameRef} type="text" placeholder="Album name" />
           <SubmitButton />
         </form>
       </div>

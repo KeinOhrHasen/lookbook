@@ -18,6 +18,7 @@ const privateLinks = [
   { href: '/upload', label: 'Upload' },
   { href: '/grids', label: 'Grids' },
   { href: '/booking', label: 'Booking' },
+  { href: '/sessions', label: 'Sessions' },
   { href: '/settings', label: 'Settings' },
   { href: '/chat', label: 'Chat' },
 ];

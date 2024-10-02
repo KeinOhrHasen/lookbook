@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ENVIRONMENT } from '@/src/core/configs/environment';
 import { IAlbum } from '@/app/_interfaces/albums.model';
 import { MdFileDownload, MdFullscreen } from 'react-icons/md';
+import { Input } from '@/components/ui/input';
 
 export default function Album() {
   const gridRef = useRef(null);
@@ -56,8 +57,8 @@ export default function Album() {
   };
 
   return (
-    <div className="p-24 bg-slate-300">
-      <h1 className="title mb-4">Album {album?.name}</h1>
+    <div className="px-24 py-12 bg-slate-300">
+      <h1 className="title mb-6">Album {album?.name}</h1>
       <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
         {album &&
           album.pictures.map((picture, index) => (
@@ -83,10 +84,14 @@ export default function Album() {
             </div>
           ))}
       </div>
-      <input type="input" id="name" name="name" ref={gridRef} className="w-80 m-3"></input>
-      <Button onClick={saveConfigs} className="ml-4">
-        Submit
-      </Button>
+
+      <h1 className="title mt-6">{album?.name} grid setup</h1>
+      <div className="flex items-center">
+        <Input type="input" id="name" name="name" ref={gridRef} className="w-80 p-2 my-4"></Input>
+        <Button onClick={saveConfigs} className="ml-4">
+          Save grid configs
+        </Button>
+      </div>
     </div>
   );
 }

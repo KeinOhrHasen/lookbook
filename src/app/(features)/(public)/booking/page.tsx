@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { ENVIRONMENT } from '@/src/core/configs/environment';
 import axios from 'axios';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -29,6 +30,7 @@ const formSchema = z.object({
 
 export default function Booking() {
   const [date, setDate] = useState<Date>();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,7 +47,7 @@ export default function Booking() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(date, values);
     axios
-      .post(`${ENVIRONMENT.apiURL}/sessions/create`, JSON.stringify({ ...values, date }), {
+      .post(`${ENVIRONMENT.apiURL}/sessions/create`, JSON.stringify({ ...values, date, status: 'requested' }), {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -57,11 +59,13 @@ export default function Booking() {
       .catch(function (error) {
         console.log(error);
       })
-      .finally(function () {});
+      .finally(function () {
+        router.push('/sessions');
+      });
   }
 
   return (
-    <div className="p-24 bg-slate-300">
+    <div className="px-24 py-12 bg-slate-300">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

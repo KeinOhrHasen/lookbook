@@ -1,5 +1,6 @@
 // lib/redux/store.ts
 import gridsReducer from '@/lib/redux/features/grids/slice';
+import sessionsReducer from '@/lib/redux/features/sessions/slice';
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './rootSaga';
@@ -11,6 +12,7 @@ export const makeStore = () => {
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
     reducer: {
       grids: gridsReducer,
+      sessions: sessionsReducer,
     },
   });
 

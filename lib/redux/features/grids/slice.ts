@@ -1,4 +1,3 @@
-// lib/redux/features/counter/slice.ts
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { loadAsyncRequest } from '@/lib/redux/features/grids/saga';
@@ -16,21 +15,11 @@ const slice = createSlice({
   name: 'grids',
   initialState,
   reducers: {
-    // initializeCount: (state, action: PayloadAction<any[]>) => {
-    //   state.value = action.payload;
-    // },
-    list: () => {
-      //   console.log(action.payload);
-      //   state.value = action.payload;
-    },
-
+    list: () => {},
     listSuccess: (state, action: PayloadAction<IGrid[]>) => {
       console.log(action.payload);
       state.value = action.payload;
     },
-    // decrement: (state) => {
-    //   state.value -= 1;
-    // },
   },
 });
 

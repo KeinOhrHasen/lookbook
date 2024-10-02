@@ -43,7 +43,8 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto] px-24 pt-24 pb-4 bg-slate-300">
+    <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto] px-24 pt-12 pb-4 bg-slate-300">
+      <div className="">Ask Chat GPT</div>
       <div>
         {messages.map(({ role, content }, index) => {
           const avatar = role == 'user' ? '👤' : '🤖';
@@ -61,14 +62,14 @@ export default function Chat() {
         <div className="flex w-full">
           <Input
             type="text"
-            placeholder="Message GeniusGPT"
+            placeholder="Message to Chat GPT"
             className="input input-bordered join-item w-full"
             value={text}
             required
             onChange={(e) => setText(e.target.value)}
           />
           <Button className="btn btn-primary join-item ml-8" type="submit" disabled={isPending}>
-            {isPending ? 'please wait...' : 'ask question'}
+            {isPending ? 'please wait...' : 'Ask question'}
           </Button>
         </div>
       </form>
